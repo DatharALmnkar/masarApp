@@ -2,7 +2,7 @@ import 'package:course_app/Cash/cash_Helper.dart';
 import 'package:course_app/core/Widgets/custom_general_elevated_button.dart';
 import 'package:course_app/core/constants/app_fonts.dart';
 import 'package:course_app/core/constants/colors.dart';
-import 'package:course_app/features/Login/login_page.dart';
+import 'package:course_app/features/Login/Login_ui/login_page.dart';
 import 'package:course_app/features/SignUp/SignUp_ui/signup_page.dart';
 import 'package:flutter/material.dart';
 

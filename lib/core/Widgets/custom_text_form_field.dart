@@ -1,4 +1,5 @@
 import 'package:course_app/core/constants/app_fonts.dart';
+import 'package:course_app/core/helper_functions/form_validators.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -11,9 +12,11 @@ class CustomTextFormField extends StatelessWidget {
     this.onSaved,
     this.obscureText = false,
     this.onChanged,
+    this.validator,
   });
 
   final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
   final String hintText;
   final String text;
   final TextInputType textInputType;
@@ -40,12 +43,7 @@ class CustomTextFormField extends StatelessWidget {
           onChanged: onChanged,
           obscureText: obscureText,
           onSaved: onSaved,
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'This field is required';
-            }
-            return null;
-          },
+          validator: validator ?? FormValidators.required,
           keyboardType: textInputType,
           style: AppFonts.style(fontSize: 16, color: Colors.black),
           decoration: InputDecoration(

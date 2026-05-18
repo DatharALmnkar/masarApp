@@ -1,30 +1,9 @@
-import 'package:course_app/features/SignUp/SignUp_Logic/signup_state.dart';
+import 'package:course_app/Cash/cash_Helper.dart';
+import 'package:course_app/features/Login/Login_Logic/login_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignupCubit extends Cubit<SignupState> {
-  SignupCubit() : super(const SignupState());
-
-  void firstNameChanged(String value) {
-    emit(
-      state.copyWith(
-        firstName: value,
-        isButtonActive: _isFormValid(
-          firstName: value,
-        ),
-        clearError: true,
-      ),
-    );
-  }
-
-  void lastNameChanged(String value) {
-    emit(
-      state.copyWith(
-        lastName: value,
-        isButtonActive: _isFormValid(lastName: value),
-        clearError: true,
-      ),
-    );
-  }
+class LoginCubit extends Cubit<LoginState> {
+  LoginCubit() : super(const LoginState());
 
   void emailChanged(String value) {
     emit(
@@ -50,24 +29,14 @@ class SignupCubit extends Cubit<SignupState> {
     emit(state.copyWith(isPasswordHidden: !state.isPasswordHidden));
   }
 
-  bool _isFormValid({
-    String? firstName,
-    String? lastName,
-    String? email,
-    String? password,
-  }) {
-    final first = firstName ?? state.firstName;
-    final last = lastName ?? state.lastName;
+  bool _isFormValid({String? email, String? password}) {
     final mail = email ?? state.email;
     final pass = password ?? state.password;
 
-    return first.trim().isNotEmpty &&
-        last.trim().isNotEmpty &&
-        mail.trim().isNotEmpty &&
-        pass.trim().isNotEmpty;
+    return mail.trim().isNotEmpty && pass.trim().isNotEmpty;
   }
 
-  Future<void> signup() async {
+  Future<void> login() async {
     if (!state.isButtonActive || state.isLoading) return;
 
     emit(state.copyWith(isLoading: true, clearError: true));
@@ -75,10 +44,12 @@ class SignupCubit extends Cubit<SignupState> {
     try {
       await Future.delayed(const Duration(seconds: 2));
 
+      await CashHelper.saveData(key: 'token', value: 'demo_token');
+
       emit(
         state.copyWith(
           isLoading: false,
-          signupSuccess: true,
+          loginSuccess: true,
         ),
       );
     } catch (_) {

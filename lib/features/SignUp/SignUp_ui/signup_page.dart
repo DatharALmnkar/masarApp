@@ -2,9 +2,10 @@ import 'package:course_app/core/Widgets/custom_general_elevated_button.dart';
 import 'package:course_app/core/Widgets/custom_text_button.dart';
 import 'package:course_app/core/Widgets/custom_text_form_field.dart';
 import 'package:course_app/core/constants/app_assets.dart';
+import 'package:course_app/core/helper_functions/form_validators.dart';
 import 'package:course_app/core/constants/app_fonts.dart';
 import 'package:course_app/core/constants/colors.dart';
-import 'package:course_app/features/Login/login_page.dart';
+import 'package:course_app/features/Login/Login_ui/login_page.dart';
 import 'package:course_app/features/SignUp/SignUp_Logic/signup_cubit.dart';
 import 'package:course_app/features/SignUp/SignUp_Logic/signup_state.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +23,15 @@ class SignupPage extends StatelessWidget {
   }
 }
 
-class _SignupView extends StatelessWidget {
+class _SignupView extends StatefulWidget {
   const _SignupView();
+
+  @override
+  State<_SignupView> createState() => _SignupViewState();
+}
+
+class _SignupViewState extends State<_SignupView> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +55,9 @@ class _SignupView extends StatelessWidget {
                 }
               },
               builder: (context, state) {
-                return Column(
+                return Form(
+                  key: _formKey,
+                  child: Column(
                   children: [
                     const SizedBox(height: 8),
                     ClipRRect(
@@ -98,6 +108,7 @@ class _SignupView extends StatelessWidget {
                       hintText: 'First Name',
                       textInputType: TextInputType.name,
                       text: 'First Name',
+                      validator: FormValidators.required,
                       onChanged: (value) =>
                           context.read<SignupCubit>().firstNameChanged(value),
                     ),
@@ -106,6 +117,7 @@ class _SignupView extends StatelessWidget {
                       hintText: 'Last Name',
                       textInputType: TextInputType.name,
                       text: 'Last Name',
+                      validator: FormValidators.required,
                       onChanged: (value) =>
                           context.read<SignupCubit>().lastNameChanged(value),
                     ),
@@ -114,6 +126,7 @@ class _SignupView extends StatelessWidget {
                       hintText: 'Email',
                       textInputType: TextInputType.emailAddress,
                       text: 'Email',
+                      validator: FormValidators.email,
                       onChanged: (value) =>
                           context.read<SignupCubit>().emailChanged(value),
                     ),
@@ -122,6 +135,7 @@ class _SignupView extends StatelessWidget {
                       hintText: 'Password',
                       textInputType: TextInputType.visiblePassword,
                       text: 'Password',
+                      validator: FormValidators.password,
                       obscureText: state.isPasswordHidden,
                       onChanged: (value) =>
                           context.read<SignupCubit>().passwordChanged(value),
@@ -140,7 +154,11 @@ class _SignupView extends StatelessWidget {
                     const SizedBox(height: 30),
                     CustomGeneralElevatedButton(
                       onPressed: state.isButtonActive && !state.isLoading
-                          ? () => context.read<SignupCubit>().signup()
+                          ? () {
+                              if (_formKey.currentState!.validate()) {
+                                context.read<SignupCubit>().signup();
+                              }
+                            }
                           : null,
                       text: state.isLoading ? 'Loading...' : 'Sign Up Now',
                       textButtonColor: Colors.white,
@@ -161,6 +179,7 @@ class _SignupView extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                   ],
+                  ),
                 );
               },
             ),
