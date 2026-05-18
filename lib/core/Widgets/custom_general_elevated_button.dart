@@ -11,7 +11,7 @@ class CustomGeneralElevatedButton extends StatelessWidget {
     this.borderSide,
   });
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String text;
   final Color textButtonColor;
   final Color buttonColor;

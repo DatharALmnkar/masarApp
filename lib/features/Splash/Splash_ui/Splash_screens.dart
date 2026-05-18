@@ -1,8 +1,5 @@
 import 'package:course_app/core/constants/colors.dart';
-import 'package:course_app/features/Home/home_page.dart';
-import 'package:course_app/features/Login/login_page.dart';
 import 'package:course_app/features/OnBoarding/onboarding_page.dart';
-import 'package:course_app/features/Splash/Splash_Data/Splash_repos.dart';
 import 'package:course_app/features/Splash/Splash_Logic/Splash_cubit.dart';
 import 'package:course_app/features/Splash/Splash_Logic/Splash_state.dart';
 import 'package:course_app/features/Splash/Splash_ui/Splash_widgets.dart';
@@ -20,7 +17,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SplashCubit(SplashRepo())..startSplash(),
+      create: (_) => SplashCubit()..startSplash(),
       child: const _SplashView(),
     );
   }
@@ -37,16 +34,6 @@ class _SplashView extends StatelessWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (_) => const OnboardingPage()),
-          );
-        } else if (state is GoToLogin) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const LoginPage()),
-          );
-        } else if (state is GoToHome) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const HomePage()),
           );
         }
       },
