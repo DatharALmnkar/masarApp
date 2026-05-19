@@ -1,16 +1,19 @@
+import 'package:course_app/features/SignUp/SignUp_Data/signup_repos.dart';
 import 'package:course_app/features/SignUp/SignUp_Logic/signup_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupCubit extends Cubit<SignupState> {
-  SignupCubit() : super(const SignupState());
+  final SignupRepo _repo;
+
+  SignupCubit({SignupRepo? repo})
+      : _repo = repo ?? SignupRepo(),
+        super(const SignupState());
 
   void firstNameChanged(String value) {
     emit(
       state.copyWith(
         firstName: value,
-        isButtonActive: _isFormValid(
-          firstName: value,
-        ),
+        isButtonActive: _isFormValid(firstName: value),
         clearError: true,
       ),
     );
@@ -73,19 +76,25 @@ class SignupCubit extends Cubit<SignupState> {
     emit(state.copyWith(isLoading: true, clearError: true));
 
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      final response = await _repo.register(
+        email: state.email,
+        password: state.password,
+        firstName: state.firstName,
+        lastName: state.lastName,
+      );
 
       emit(
         state.copyWith(
           isLoading: false,
           signupSuccess: true,
+          successMessage: response.message,
         ),
       );
-    } catch (_) {
+    } catch (e) {
       emit(
         state.copyWith(
           isLoading: false,
-          errorMessage: 'Something went wrong. Please try again.',
+          errorMessage: e.toString(),
         ),
       );
     }

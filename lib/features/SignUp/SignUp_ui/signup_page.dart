@@ -8,6 +8,7 @@ import 'package:course_app/core/constants/colors.dart';
 import 'package:course_app/features/Login/Login_ui/login_page.dart';
 import 'package:course_app/features/SignUp/SignUp_Logic/signup_cubit.dart';
 import 'package:course_app/features/SignUp/SignUp_Logic/signup_state.dart';
+import 'package:course_app/features/SignUp/SignUp_ui/otp_verification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,18 +43,30 @@ class _SignupViewState extends State<_SignupView> {
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: SingleChildScrollView(
             child: BlocConsumer<SignupCubit, SignupState>(
-              listener: (context, state) {
-                if (state.signupSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Sign up successful!')),
-                  );
-                }
-                if (state.errorMessage != null) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
-                }
-              },
+            listener: (context, state) {
+  if (state.signupSuccess) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          state.successMessage ?? 'Sign up successful! Please verify your email.',
+        ),
+      ),
+    );
+    
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => OtpVerificationPage(email: state.email ?? ''), 
+      ),
+    );
+  }
+  if (state.errorMessage != null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(state.errorMessage!)),
+    );
+  }
+},
+
               builder: (context, state) {
                 return Form(
                   key: _formKey,

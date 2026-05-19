@@ -7,6 +7,7 @@ class SignupState {
   final bool isButtonActive;
   final bool isLoading;
   final bool signupSuccess;
+  final String? successMessage;
   final String? errorMessage;
 
   const SignupState({
@@ -18,6 +19,7 @@ class SignupState {
     this.isButtonActive = false,
     this.isLoading = false,
     this.signupSuccess = false,
+    this.successMessage,
     this.errorMessage,
   });
 
@@ -30,6 +32,7 @@ class SignupState {
     bool? isButtonActive,
     bool? isLoading,
     bool? signupSuccess,
+    String? successMessage,
     String? errorMessage,
     bool clearError = false,
   }) {
@@ -42,6 +45,7 @@ class SignupState {
       isButtonActive: isButtonActive ?? this.isButtonActive,
       isLoading: isLoading ?? this.isLoading,
       signupSuccess: signupSuccess ?? this.signupSuccess,
+      successMessage: successMessage ?? this.successMessage,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
   }
