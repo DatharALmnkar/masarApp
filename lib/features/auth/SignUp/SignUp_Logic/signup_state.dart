@@ -9,6 +9,8 @@ class SignupState {
   final bool signupSuccess;
   final String? successMessage;
   final String? errorMessage;
+  final bool isVerifyLoading;
+  final bool verifySuccess;
 
   const SignupState({
     this.firstName = '',
@@ -21,6 +23,8 @@ class SignupState {
     this.signupSuccess = false,
     this.successMessage,
     this.errorMessage,
+    this.isVerifyLoading = false,
+    this.verifySuccess = false,
   });
 
   SignupState copyWith({
@@ -35,6 +39,8 @@ class SignupState {
     String? successMessage,
     String? errorMessage,
     bool clearError = false,
+    bool? isVerifyLoading,
+    bool? verifySuccess,
   }) {
     return SignupState(
       firstName: firstName ?? this.firstName,
@@ -47,6 +53,8 @@ class SignupState {
       signupSuccess: signupSuccess ?? this.signupSuccess,
       successMessage: successMessage ?? this.successMessage,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
+      isVerifyLoading: isVerifyLoading ?? this.isVerifyLoading,
+      verifySuccess: verifySuccess ?? this.verifySuccess,
     );
   }
 }

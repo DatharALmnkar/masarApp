@@ -1,9 +1,11 @@
-import 'package:course_app/Cash/cash_Helper.dart';
-import 'package:course_app/features/Login/Login_Logic/login_state.dart';
+import 'package:course_app/features/auth/Login/Login_data/login_repos.dart';
+import 'package:course_app/features/auth/Login/Login_Logic/login_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(const LoginState());
+  final LoginRepo _repo;
+
+  LoginCubit(this._repo) : super(const LoginState());
 
   void emailChanged(String value) {
     emit(
@@ -42,23 +44,11 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(isLoading: true, clearError: true));
 
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      await _repo.login(email: state.email, password: state.password);
 
-      await CashHelper.saveData(key: 'token', value: 'demo_token');
-
-      emit(
-        state.copyWith(
-          isLoading: false,
-          loginSuccess: true,
-        ),
-      );
-    } catch (_) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          errorMessage: 'Something went wrong. Please try again.',
-        ),
-      );
+      emit(state.copyWith(isLoading: false, loginSuccess: true));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
 }

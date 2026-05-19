@@ -6,10 +6,11 @@ import 'package:course_app/core/helper_functions/form_validators.dart';
 import 'package:course_app/core/constants/app_fonts.dart';
 import 'package:course_app/core/constants/colors.dart';
 import 'package:course_app/features/Home/home_page.dart';
-import 'package:course_app/features/Login/Login_Logic/login_cubit.dart';
-import 'package:course_app/features/Login/Login_Logic/login_state.dart';
-import 'package:course_app/features/Login/Login_ui/forgot_password_page.dart';
-import 'package:course_app/features/SignUp/SignUp_ui/signup_page.dart';
+import 'package:course_app/features/auth/Login/Login_data/login_repos.dart';
+import 'package:course_app/features/auth/Login/Login_Logic/login_cubit.dart';
+import 'package:course_app/features/auth/Login/Login_Logic/login_state.dart';
+import 'package:course_app/features/auth/Login/Login_ui/forgot_password_page.dart';
+import 'package:course_app/features/auth/SignUp/SignUp_ui/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +19,11 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (_) => LoginCubit(), child: const _LoginView());
+    return BlocProvider(
+    
+      create: (_) => LoginCubit(LoginRepo()), 
+      child: const _LoginView(),
+    );
   }
 }
 

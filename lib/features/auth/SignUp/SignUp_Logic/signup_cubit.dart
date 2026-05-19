@@ -1,13 +1,17 @@
-import 'package:course_app/features/SignUp/SignUp_Data/signup_repos.dart';
-import 'package:course_app/features/SignUp/SignUp_Logic/signup_state.dart';
+import 'package:course_app/Cash/cash_Helper.dart';
+import 'package:course_app/core/Apis/Errors/Exeptions.dart';
+import 'package:course_app/features/auth/SignUp/SignUp_Data/signup_repos.dart';
+
+import 'package:course_app/features/auth/SignUp/SignUp_Logic/signup_state.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupCubit extends Cubit<SignupState> {
   final SignupRepo _repo;
 
   SignupCubit({SignupRepo? repo})
-      : _repo = repo ?? SignupRepo(),
-        super(const SignupState());
+    : _repo = repo ?? SignupRepo(),
+      super(const SignupState());
 
   void firstNameChanged(String value) {
     emit(
@@ -91,12 +95,53 @@ class SignupCubit extends Cubit<SignupState> {
         ),
       );
     } catch (e) {
-      emit(
-        state.copyWith(
-          isLoading: false,
-          errorMessage: e.toString(),
-        ),
-      );
+      final errorMessage = e is DioException ? parseError(e) : e.toString();
+
+      emit(state.copyWith(isLoading: false, errorMessage: errorMessage));
     }
   }
+
+  Future<void> verifyOtp(String otp) async {
+    emit(state.copyWith(isVerifyLoading: true, clearError: true));
+
+    try {
+      final String token = CashHelper.getString('token') ?? '';
+
+      if (token.isEmpty) {
+        throw Exception('Token not found. Please register again.');
+      }
+
+      final message = await _repo.verifyOtp(token: token, otpCode: otp);
+
+      emit(
+        state.copyWith(
+          isVerifyLoading: false,
+          verifySuccess: true,
+          successMessage: message,
+        ),
+      );
+    } catch (e) {
+      final errorMessage = e is DioException ? parseError(e) : e.toString();
+
+      emit(state.copyWith(isVerifyLoading: false, errorMessage: errorMessage));
+    }
+  }
+
+
+
+  void resetSignupStatus() {
+  emit(state.copyWith(
+    signupSuccess: false,
+    errorMessage: null,
+    successMessage: null,
+  ));
+}
+
+void resetVerifyStatus() {
+  emit(state.copyWith(
+    verifySuccess: false,
+    errorMessage: null,
+    successMessage: null,
+  ));
+}
 }

@@ -1,6 +1,8 @@
 import 'package:course_app/Cash/cash_Helper.dart';
-import 'package:course_app/features/SignUp/SignUp_Data/signup_models.dart';
-import 'package:course_app/features/SignUp/SignUp_Data/signup_services.dart';
+import 'package:course_app/core/Apis/Errors/Exeptions.dart';
+
+import 'package:course_app/features/auth/SignUp/SignUp_Data/signup_models.dart';
+import 'package:course_app/features/auth/SignUp/SignUp_Data/signup_services.dart';
 import 'package:dio/dio.dart';
 
 class SignupRepo {
@@ -29,7 +31,26 @@ class SignupRepo {
 
       return response;
     } on DioException catch (e) {
-      throw _services.parseError(e);
+     throw parseError(e);
+    }
+  }
+
+
+
+
+ 
+  Future<String> verifyOtp({
+    required String token,
+    required String otpCode,
+  }) async {
+    try {
+      final message = await _services.verifyOtp(
+        token: token, 
+        otpCode: otpCode,
+      );
+      return message;
+    } on DioException catch (e) {
+     throw parseError(e);
     }
   }
 }
