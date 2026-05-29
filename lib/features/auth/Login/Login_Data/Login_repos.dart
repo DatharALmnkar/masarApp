@@ -1,4 +1,4 @@
-import 'package:course_app/Cash/cash_Helper.dart';
+import 'package:course_app/Cash/cache_helper.dart';
 import 'package:course_app/features/auth/Login/Login_Data/Login_Model.dart';
 import 'package:course_app/features/auth/Login/Login_Data/Login_services.dart';
 import 'package:dio/dio.dart';
@@ -20,7 +20,7 @@ class LoginRepo {
       );
 
       if (response.token.isNotEmpty) {
-        await CashHelper.saveData(key: 'token', value: response.token);
+        await CacheHelper.saveData(key: 'token', value: response.token);
       }
 
       return response;

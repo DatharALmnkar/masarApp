@@ -84,8 +84,8 @@ class _SignupViewState extends State<_SignupView> {
                         borderRadius: BorderRadius.circular(20),
                         child: Image.asset(
                           AppAssets.appLogo,
-                          width: 100,
-                          height: 100,
+                          width: 170,
+                          height: 170,
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => Container(
                             width: 100,
@@ -102,7 +102,6 @@ class _SignupViewState extends State<_SignupView> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8),
 
                       Text(
                         'Welcome to Masar',

@@ -20,8 +20,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-    
-      create: (_) => LoginCubit(LoginRepo()), 
+      create: (_) => LoginCubit(LoginRepo()),
       child: const _LoginView(),
     );
   }
@@ -72,8 +71,8 @@ class _LoginViewState extends State<_LoginView> {
                         borderRadius: BorderRadius.circular(20),
                         child: Image.asset(
                           AppAssets.appLogo,
-                          width: 100,
-                          height: 100,
+                          width: 170,
+                          height: 170,
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => Container(
                             width: 100,
@@ -90,7 +89,7 @@ class _LoginViewState extends State<_LoginView> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+
                       Text(
                         'Welcome Back',
                         textAlign: TextAlign.center,

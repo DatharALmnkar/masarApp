@@ -1,0 +1,36 @@
+{
+  
+  "choose_language": "Choose Language",
+  "english": "English",
+  "arabic": "Arabic",
+  "welcome_back": "Welcome Back",
+  "login_subtitle": "Sign in to continue managing your courses with ease",
+  "email": "Email",
+  "password": "Password",
+  "forgot_password": "Forgot your password?",
+  "login": "Login",
+  "loading": "Loading...",
+  "sign_up": "Sign Up",
+  "no_account": "Doesn't have an account?",
+  "login_success": "Login successful!",
+  "something_wrong": "Something went wrong. Please try again.",
+  "connection_timeout": "Connection timeout. Please try again.",
+  "no_internet": "No internet connection. Check your network.",
+  "bad_server_response": "Bad response from server.",
+    "field_required": "This field is required",
+  "valid_email": "Enter a valid email address",
+  "password_8": "Password must be at least 8 characters",
+    "welcome_masar": "Welcome to Masar",
+  "signup_subtitle": "Create your account and start managing your courses with ease",
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "sign_up_now": "Sign Up Now",
+  "already_account": "Already have an account?",
+  "signup_success_verify": "Sign up successful! Please verify your email.",
+    "emailVerification": "Email Verification",
+  "otpSentTo": "We have sent a 6-digit verification code to:\n{email}",
+  "verifying": "Verifying...",
+  "verifyNow": "Verify Now"
+
+ 
+}

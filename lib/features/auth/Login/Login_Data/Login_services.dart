@@ -1,4 +1,4 @@
-import 'package:course_app/core/Apis/dio_Consumer.dart';
+import 'package:course_app/core/Apis/dio_consumer.dart';
 import 'package:course_app/core/Apis/end_point.dart';
 import 'package:course_app/core/helper_functions/device_helper.dart';
 import 'package:course_app/features/auth/Login/Login_Data/Login_Model.dart';

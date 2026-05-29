@@ -1,7 +1,6 @@
-import 'package:course_app/Cash/cash_Helper.dart';
-import 'package:course_app/core/Apis/Errors/Exeptions.dart';
+import 'package:course_app/Cash/cache_helper.dart';
+import 'package:course_app/core/Apis/Errors/exceptions.dart';
 import 'package:course_app/features/auth/SignUp/SignUp_Data/signup_repos.dart';
-
 import 'package:course_app/features/auth/SignUp/SignUp_Logic/signup_state.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,17 +94,28 @@ class SignupCubit extends Cubit<SignupState> {
         ),
       );
     } catch (e) {
-      final errorMessage = e is DioException ? parseError(e) : e.toString();
+  String errorMessage = 'Something went wrong';
 
-      emit(state.copyWith(isLoading: false, errorMessage: errorMessage));
-    }
+  if (e is ServerException) {
+    errorMessage = e.errorModel.message;
+  } else {
+    errorMessage = e.toString();
+  }
+
+  emit(
+    state.copyWith(
+      isLoading: false,
+      errorMessage: errorMessage,
+    ),
+  );
+}
   }
 
   Future<void> verifyOtp(String otp) async {
     emit(state.copyWith(isVerifyLoading: true, clearError: true));
 
     try {
-      final String token = CashHelper.getString('token') ?? '';
+      final String token = CacheHelper.getString('token') ?? '';
 
       if (token.isEmpty) {
         throw Exception('Token not found. Please register again.');
@@ -121,10 +131,21 @@ class SignupCubit extends Cubit<SignupState> {
         ),
       );
     } catch (e) {
-      final errorMessage = e is DioException ? parseError(e) : e.toString();
+  String errorMessage = 'Something went wrong';
 
-      emit(state.copyWith(isVerifyLoading: false, errorMessage: errorMessage));
-    }
+  if (e is ServerException) {
+    errorMessage = e.errorModel.message;
+  } else {
+    errorMessage = e.toString();
+  }
+
+  emit(
+    state.copyWith(
+      isLoading: false,
+      errorMessage: errorMessage,
+    ),
+  );
+}
   }
 
 

@@ -1,8 +1,9 @@
 import 'package:course_app/core/constants/colors.dart';
-import 'package:course_app/features/OnBoarding/onboarding_page.dart';
 import 'package:course_app/features/Splash/Splash_Logic/Splash_cubit.dart';
 import 'package:course_app/features/Splash/Splash_Logic/Splash_state.dart';
 import 'package:course_app/features/Splash/Splash_ui/Splash_widgets.dart';
+import 'package:course_app/features/auth/Login/Login_ui/login_page.dart';
+import 'package:course_app/features/language/ui/language_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,10 +31,16 @@ class _SplashView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
-        if (state is GoToOnBoarding) {
+        if (state is GoToLogin) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) => const OnboardingPage()),
+            MaterialPageRoute(builder: (_) => const LoginPage()),
+          );
+        } else if (state is GoToLanguageSelection) {
+          
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const LanguageSelectionScreen()),
           );
         }
       },

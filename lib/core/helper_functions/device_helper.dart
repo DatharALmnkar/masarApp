@@ -1,13 +1,12 @@
 import 'dart:io';
-
-import 'package:course_app/Cash/cash_Helper.dart';
+import 'package:course_app/Cash/cache_helper.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class DeviceHelper {
   static const String _deviceIdKey = 'device_id';
 
   static Future<String> getDeviceId() async {
-    final cached = CashHelper.getString(_deviceIdKey);
+    final cached = CacheHelper.getString(_deviceIdKey);
     if (cached != null && cached.isNotEmpty) {
       return cached;
     }
@@ -25,7 +24,7 @@ class DeviceHelper {
       deviceId = 'unknown_device';
     }
 
-    await CashHelper.saveData(key: _deviceIdKey, value: deviceId);
+    await CacheHelper.saveData(key: _deviceIdKey, value: deviceId);
     return deviceId;
   }
 }

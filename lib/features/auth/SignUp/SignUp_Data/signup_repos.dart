@@ -1,6 +1,5 @@
-import 'package:course_app/Cash/cash_Helper.dart';
-import 'package:course_app/core/Apis/Errors/Exeptions.dart';
-
+import 'package:course_app/Cash/cache_helper.dart';
+import 'package:course_app/core/Apis/Errors/exceptions.dart';
 import 'package:course_app/features/auth/SignUp/SignUp_Data/signup_models.dart';
 import 'package:course_app/features/auth/SignUp/SignUp_Data/signup_services.dart';
 import 'package:dio/dio.dart';
@@ -26,12 +25,12 @@ class SignupRepo {
       );
 
       if (response.token.isNotEmpty) {
-        await CashHelper.saveData(key: 'token', value: response.token);
+        await CacheHelper.saveData(key: 'token', value: response.token);
       }
 
       return response;
     } on DioException catch (e) {
-     throw parseError(e);
+      handleDioException(e);
     }
   }
 
@@ -50,7 +49,7 @@ class SignupRepo {
       );
       return message;
     } on DioException catch (e) {
-     throw parseError(e);
+      handleDioException(e);
     }
   }
 }
