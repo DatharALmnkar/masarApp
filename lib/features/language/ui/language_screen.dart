@@ -7,6 +7,7 @@ import 'package:course_app/features/language/logic/language_cubit.dart';
 import 'package:course_app/features/language/logic/language_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
   const LanguageSelectionScreen({Key? key}) : super(key: key);
@@ -77,7 +78,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                       const SizedBox(height: 38),
 
                       Text(
-                        'اختر اللغة ',
+                       'choose_language'.tr(),
                         style: AppFonts.style(
                           fontWeight: FontWeight.bold,
                           fontSize: 28,
@@ -92,7 +93,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                         children: [
                           buildLanguageOption(
                             flagAsset: 'assets/images/uk_flag.png',
-                            languageName: 'English',
+                            languageName: 'english'.tr(),
                             onTap: () {
                               cubit.changeLanguage(context, 'en');
                             },
@@ -100,7 +101,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
 
                           buildLanguageOption(
                             flagAsset: 'assets/images/syria_flag.png',
-                            languageName: 'العربية',
+                           languageName: 'arabic'.tr(),
                             onTap: () {
                               cubit.changeLanguage(context, 'ar');
                             },

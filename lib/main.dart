@@ -2,6 +2,7 @@ import 'package:course_app/Cash/cache_helper.dart';
 import 'package:course_app/core/constants/app_fonts.dart';
 import 'package:course_app/core/constants/colors.dart';
 import 'package:course_app/features/Splash/Splash_ui/Splash_screen.dart';
+import 'package:course_app/features/auth/Verification_Otp/Verification_Otp_ui/otp_verification_page.dart';
 import 'package:course_app/features/language/logic/language_cubit.dart';
 import 'package:course_app/features/language/ui/language_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -58,7 +59,7 @@ class MasarApp extends StatelessWidget {
           fontFamily: AppFonts.kantumruyPro,
           textTheme: AppFonts.textTheme(),
         ),
-        home: const LanguageSelectionScreen(),
+        home: const SplashPage(),
       ),
     );
   }

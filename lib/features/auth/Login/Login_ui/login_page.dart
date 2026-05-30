@@ -9,10 +9,11 @@ import 'package:course_app/features/Home/home_page.dart';
 import 'package:course_app/features/auth/Login/Login_data/login_repos.dart';
 import 'package:course_app/features/auth/Login/Login_Logic/login_cubit.dart';
 import 'package:course_app/features/auth/Login/Login_Logic/login_state.dart';
-import 'package:course_app/features/auth/Login/Login_ui/forgot_password_page.dart';
+import 'package:course_app/features/auth/Forget_Password/Forget_Password_ui/forgot_password_page.dart';
 import 'package:course_app/features/auth/SignUp/SignUp_ui/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -46,9 +47,9 @@ class _LoginViewState extends State<_LoginView> {
           child: BlocConsumer<LoginCubit, LoginState>(
             listener: (context, state) {
               if (state.loginSuccess) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Login successful!')),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text('login_success'.tr())));
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (_) => const HomePage()),
@@ -57,7 +58,7 @@ class _LoginViewState extends State<_LoginView> {
               if (state.errorMessage != null) {
                 ScaffoldMessenger.of(
                   context,
-                ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
+                ).showSnackBar(SnackBar(content: Text(state.errorMessage!.tr())));
               }
             },
             builder: (context, state) {
@@ -91,7 +92,7 @@ class _LoginViewState extends State<_LoginView> {
                       ),
 
                       Text(
-                        'Welcome Back',
+                        'welcome_back'.tr(),
                         textAlign: TextAlign.center,
                         style: AppFonts.style(
                           fontWeight: FontWeight.w700,
@@ -101,7 +102,7 @@ class _LoginViewState extends State<_LoginView> {
                       ),
 
                       Text(
-                        'Sign in to continue managing your courses with ease',
+                        'login_subtitle'.tr(),
                         textAlign: TextAlign.center,
                         style: AppFonts.style(
                           fontWeight: FontWeight.w400,
@@ -111,19 +112,25 @@ class _LoginViewState extends State<_LoginView> {
                       ),
                       const SizedBox(height: 32),
                       CustomTextFormField(
-                        hintText: 'Email',
+                        hintText: 'email'.tr(),
                         textInputType: TextInputType.emailAddress,
-                        text: 'Email',
-                        validator: FormValidators.email,
+                        text: 'email'.tr(),
+                        validator: (value) {
+                          final result = FormValidators.email(value);
+                          return result?.tr();
+                        },
                         onChanged: (value) =>
                             context.read<LoginCubit>().emailChanged(value),
                       ),
                       const SizedBox(height: 18),
                       CustomTextFormField(
-                        hintText: 'Password',
+                        hintText: 'password'.tr(),
                         textInputType: TextInputType.visiblePassword,
-                        text: 'Password',
-                        validator: FormValidators.password,
+                        text: 'password'.tr(),
+                        validator: (value) {
+                          final result = FormValidators.password(value);
+                          return result?.tr();
+                        },
                         obscureText: state.isPasswordHidden,
                         onChanged: (value) =>
                             context.read<LoginCubit>().passwordChanged(value),
@@ -152,7 +159,7 @@ class _LoginViewState extends State<_LoginView> {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            'Forgot your password?',
+                            'forgot_password'.tr(),
                             style: AppFonts.style(
                               fontWeight: FontWeight.w500,
                               fontSize: 22,
@@ -171,7 +178,7 @@ class _LoginViewState extends State<_LoginView> {
                                 }
                               }
                             : null,
-                        text: state.isLoading ? 'Loading...' : 'Login',
+                        text: state.isLoading ? 'loading'.tr() : 'login'.tr(),
                         textButtonColor: Colors.white,
                         buttonColor: state.isButtonActive
                             ? kMainColor
@@ -179,8 +186,8 @@ class _LoginViewState extends State<_LoginView> {
                       ),
                       const SizedBox(height: 20),
                       CustomTextButton(
-                        text1: "Doesn't have an account?",
-                        text2: 'Sign Up',
+                        text1: 'no_account'.tr(),
+                        text2: 'sign_up'.tr(),
                         onPressed: () {
                           Navigator.push(
                             context,

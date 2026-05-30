@@ -94,75 +94,26 @@ class SignupCubit extends Cubit<SignupState> {
         ),
       );
     } catch (e) {
-  String errorMessage = 'Something went wrong';
+      String errorMessage = 'something_wrong';
 
-  if (e is ServerException) {
-    errorMessage = e.errorModel.message;
-  } else {
-    errorMessage = e.toString();
-  }
-
-  emit(
-    state.copyWith(
-      isLoading: false,
-      errorMessage: errorMessage,
-    ),
-  );
-}
-  }
-
-  Future<void> verifyOtp(String otp) async {
-    emit(state.copyWith(isVerifyLoading: true, clearError: true));
-
-    try {
-      final String token = CacheHelper.getString('token') ?? '';
-
-      if (token.isEmpty) {
-        throw Exception('Token not found. Please register again.');
+      if (e is ServerException) {
+        errorMessage = e.errorModel.message;
+      } else {
+        errorMessage = e.toString();
       }
 
-      final message = await _repo.verifyOtp(token: token, otpCode: otp);
-
-      emit(
-        state.copyWith(
-          isVerifyLoading: false,
-          verifySuccess: true,
-          successMessage: message,
-        ),
-      );
-    } catch (e) {
-  String errorMessage = 'Something went wrong';
-
-  if (e is ServerException) {
-    errorMessage = e.errorModel.message;
-  } else {
-    errorMessage = e.toString();
+      emit(state.copyWith(isLoading: false, errorMessage: errorMessage));
+    }
   }
 
+  void resetSignupStatus() {
   emit(
     state.copyWith(
-      isLoading: false,
-      errorMessage: errorMessage,
+      signupSuccess: false,
+      errorMessage: null,
+      successMessage: null,
     ),
   );
 }
-  }
 
-
-
-  void resetSignupStatus() {
-  emit(state.copyWith(
-    signupSuccess: false,
-    errorMessage: null,
-    successMessage: null,
-  ));
-}
-
-void resetVerifyStatus() {
-  emit(state.copyWith(
-    verifySuccess: false,
-    errorMessage: null,
-    successMessage: null,
-  ));
-}
 }

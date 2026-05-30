@@ -30,6 +30,9 @@
     "emailVerification": "تأكيد البريد الإلكتروني",
   "otpSentTo": "لقد أرسلنا رمز مكون من 6 أرقام إلى:\n{email}",
   "verifying": "جارٍ التحقق...",
-  "verifyNow": "تحقق الآن"
+  "verifyNow": "تحقق الآن",
+  "token_not_found": "لم يتم العثور على التوكن، يرجى التسجيل مجددًا",
+  "verified_success": "تم التحقق بنجاح",
+  "sent otp": "تم إرسال رمز التحقق"
 
 }

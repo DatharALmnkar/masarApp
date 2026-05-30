@@ -29,25 +29,11 @@ class SignupServices {
       },
     );
 
-    return SignupResponse.fromJson(response.data as Map<String, dynamic>);
+   return SignupResponse.fromJson(response as Map<String, dynamic>);
   }
 
 
 
 
 
-
-
-
-  Future<String> verifyOtp({
-    required String token,
-    required String otpCode,
-  }) async {
-    final response = await _dioConsumer.post(
-      EndPoint.verifyOtp,
-      queryParameters: {'token': token, 'otp': otpCode},
-    );
-
-    return response.data['message'] ?? 'Verified successfully';
-  }
 }

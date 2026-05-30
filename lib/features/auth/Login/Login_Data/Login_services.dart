@@ -25,7 +25,7 @@ class LoginServices {
       },
     );
 
-    return LoginResponse.fromJson(response.data as Map<String, dynamic>);
+    return LoginResponse.fromJson(response as Map<String, dynamic>);
   }
 
   String parseError(DioException e) {
@@ -38,11 +38,11 @@ class LoginServices {
     }
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout) {
-      return 'Connection timeout. Please try again.';
+      return 'connection_timeout';
     }
     if (e.type == DioExceptionType.connectionError) {
-      return 'No internet connection. Check your network.';
+      return 'no_internet';
     }
-    return 'Something went wrong. Please try again.';
+    return 'something_wrong';
   }
 }

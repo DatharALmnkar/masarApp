@@ -30,7 +30,10 @@
     "emailVerification": "Email Verification",
   "otpSentTo": "We have sent a 6-digit verification code to:\n{email}",
   "verifying": "Verifying...",
-  "verifyNow": "Verify Now"
+  "verifyNow": "Verify Now",
+  "token_not_found": "Token not found. Please register again.",
+  "verified_success": "Verified successfully!",
+  "sent otp": "Sent otp"
 
  
 }

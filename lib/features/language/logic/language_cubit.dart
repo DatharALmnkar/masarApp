@@ -13,20 +13,24 @@ class LanguageCubit extends Cubit<LanguageState> {
 
   static const String languageKey = "language";
 
-  Future<void> changeLanguage(
-      BuildContext context,
-      String langCode,
-      ) async {
+Future<void> changeLanguage(
+  BuildContext context,
+  String langCode,
+) async {
 
-    await CacheHelper.saveData(
-      key: languageKey,
-      value: langCode,
-    );
+  await CacheHelper.saveData(
+    key: languageKey,
+    value: langCode,
+  );
 
-    await context.setLocale(Locale(langCode));
+  await context.setLocale(
+    Locale(langCode),
+  );
 
+  if (!isClosed) {
     emit(LanguageChanged(langCode));
   }
+}
 
   bool hasSavedLanguage() {
 
